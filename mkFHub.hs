@@ -9,7 +9,10 @@ main = do
     vbox <- vBoxNew False 0
     boxPackStart vbox hbox PackNatural 0
     let names = ["pcd(mm)", "エンドフランジ距離"]
-    adjs <- mkAdjustments [(40,30, 100, 1,10), (30,30,50,1,10)]
+    adjs <- mkAdjustments [(40,30, 100, 1,10), (30,20,50,1,10)]
+    update adjs
+    mapM (\x-> onValueChanged x (update adjs)) adjs
+
     spins <- myAddSpinButtons hbox names adjs
     mapM_ (`set` [spinButtonDigits := 0]) spins
     l <- labelNew $ Just "hub name"
@@ -22,17 +25,14 @@ main = do
     widgetShowAll window
     window `on` unrealize $ mainQuit
     mainGUI
+update adjs = do
+    v0:v1:[] <- mapM (`get` adjustmentValue) adjs
+    dispHub [100, v0, v1,v0,v1]
 end adjs e = do
     v0:v1:[] <- mapM (`get` adjustmentValue) adjs
-    let h = 100 / 2
     e' <- e `get` entryText
-    let hub = Hub v0 v1 v0 v1 e'
-    appendFile hubsd $ show hub ++ "\n"
-    writeFile hubd $ show hub ++ "\n"
-    --createProcess (proc "runghc" ["selector.hs"])
+    let a:b:c:d:_ = calH [100, v0, v1, v0, v1]
+    let hub = Hub a b c d e'
+    setHub hub
+    appendHub hub
     mainQuit
-{-
-end2 = do 
-    createProcess (proc "runghc" ["selector.hs"])
-    mainQuit
--}

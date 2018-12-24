@@ -37,6 +37,8 @@ getRims = do
     return [read x|x <- lines r]
 setRim :: Rim -> IO()
 setRim r = writeFile rimd $ show r ++ "\n"
+appendRim :: Rim -> IO()
+appendRim r = appendFile rimsd $ show r ++ "\n"
 getErd :: Rim -> IO Double
 getErd = return . erd
 getRimName :: Rim -> IO String
@@ -64,6 +66,8 @@ getHubs = do
     return [read x|x <- lines r]
 setHub :: Hub -> IO ()
 setHub hub = writeFile hubd $ show hub ++ "\n"
+appendHub :: Hub -> IO ()
+appendHub hub = appendFile hubsd $ show hub ++ "\n" 
 getLpcd, getRpcd, getLfcd, getRfcd :: Hub -> IO Double
 getLpcd = return . lpcd
 getRpcd = return . rpcd
@@ -71,6 +75,12 @@ getLfcd = return . lfcd
 getRfcd = return . rfcd
 getHubName :: Hub -> IO String
 getHubName = return . hName
+dispHub :: [Double] -> IO ()
+dispHub ds = do
+    let a:b:c:d:_ = calH ds
+    putStrLn $ show a ++ " " ++ show b ++ " " ++ show c ++ " " ++ show d 
+calH :: [Double] -> [Double]
+calH (a:b:c:d:e:_) = let h = a / 2 in [b,(h - c), d, (h - e)]
 showHubsAsButton :: [Hub] -> HBox -> IO ()
 showHubsAsButton hubs box = do
     mapM_ (\x -> showHubAsButton x box) hubs

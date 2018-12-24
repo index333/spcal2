@@ -1,1 +1,1 @@
-Rim {erd = 580.0, rName = "a b c"}
+Rim {erd = 424.0, rName = "da22 alex"}

@@ -11,6 +11,8 @@ main = do
     let names = ["リム外径(mm)", "デプス計の値(mm)"]
     adjs <- mkAdjustments [(600,200, 700, 1,10), (10,0,30,1,10)]
     s0:s1:_ <- myAddSpinButtons hbox names adjs
+    update adjs
+    mapM (\x-> onValueChanged x (update adjs)) adjs
     s0 `set` [spinButtonDigits := 0] 
     s1 `set` [spinButtonDigits := 0] 
     l <- labelNew $ Just "rim name"
@@ -23,13 +25,19 @@ main = do
     widgetShowAll window
     window `on` unrealize $ end2
     mainGUI
+update adjs = do
+    v0:v1:_ <- mapM (`get` adjustmentValue) adjs
+    let r = v0 - v1 * 2
+    putStr "erd="
+    putStr $ show r
+    putStrLn "(mm)"
 end adjs e = do
     v0:v1:_ <- mapM (`get` adjustmentValue) adjs
     let r = v0 - v1 * 2
     s <- e `get` entryText
     let rim = Rim r s
-    appendFile rimsd $ show rim ++ "\n"
-    writeFile rimd $ show rim ++ "\n"
+    appendRim rim
+    setRim rim
     mainQuit
 end2 = do 
     mainQuit
