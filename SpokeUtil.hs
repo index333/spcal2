@@ -78,7 +78,7 @@ getHubName = return . hName
 dispHub :: [Double] -> IO ()
 dispHub ds = do
     let a:b:c:d:_ = calH ds
-    putStrLn $ show a ++ " " ++ show b ++ " " ++ show c ++ " " ++ show d 
+    print $ Hub a b c d ""
 calH :: [Double] -> [Double]
 calH (a:b:c:d:e:_) = let h = a / 2 in [b,(h - c), d, (h - e)]
 showHubsAsButton :: [Hub] -> HBox -> IO ()

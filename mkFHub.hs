@@ -27,7 +27,7 @@ main = do
     mainGUI
 update adjs = do
     v0:v1:[] <- mapM (`get` adjustmentValue) adjs
-    dispHub [100, v0, v1,v0,v1]
+    dispHub [100,v0,v1,v0,v1]
 end adjs e = do
     v0:v1:[] <- mapM (`get` adjustmentValue) adjs
     e' <- e `get` entryText

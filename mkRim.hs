@@ -28,9 +28,7 @@ main = do
 update adjs = do
     v0:v1:_ <- mapM (`get` adjustmentValue) adjs
     let r = v0 - v1 * 2
-    putStr "erd="
-    putStr $ show r
-    putStrLn "(mm)"
+    print $ Rim r ""
 end adjs e = do
     v0:v1:_ <- mapM (`get` adjustmentValue) adjs
     let r = v0 - v1 * 2
