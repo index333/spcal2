@@ -35,10 +35,10 @@ getRims :: IO [Rim]
 getRims = do
     r <- readFile rimsd
     return [read x|x <- lines r]
-setRim :: Rim -> IO()
-setRim r = writeFile rimd $ show r ++ "\n"
-appendRim :: Rim -> IO()
-appendRim r = appendFile rimsd $ show r ++ "\n"
+writeRim :: Double -> String -> IO()
+writeRim d s = writeFile rimd $ show (Rim d s) ++ "\n"
+appendRim :: Double -> String -> IO()
+appendRim d s = appendFile rimsd $ show (Rim d s) ++ "\n"
 getErd :: Rim -> IO Double
 getErd = return . erd
 getRimName :: Rim -> IO String
@@ -64,10 +64,10 @@ getHubs :: IO [Hub]
 getHubs = do
     r <- readFile hubsd
     return [read x|x <- lines r]
-setHub :: Hub -> IO ()
-setHub hub = writeFile hubd $ show hub ++ "\n"
-appendHub :: Hub -> IO ()
-appendHub hub = appendFile hubsd $ show hub ++ "\n" 
+writeHub :: [Double] -> String -> IO ()
+writeHub (a:b:c:d:_) s = writeFile hubd $ show (Hub a b c d s) ++ "\n"
+appendHub :: [Double] -> String -> IO ()
+appendHub (a:b:c:d:_) s = appendFile hubsd $ show (Hub a b c d s) ++ "\n" 
 getLpcd, getRpcd, getLfcd, getRfcd :: Hub -> IO Double
 getLpcd = return . lpcd
 getRpcd = return . rpcd

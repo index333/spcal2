@@ -34,8 +34,8 @@ end adjs e = do
     let r = v0 - v1 * 2
     s <- e `get` entryText
     let rim = Rim r s
-    appendRim rim
-    setRim rim
+    writeRim r s
+    appendRim r s
     mainQuit
 end2 = do 
     mainQuit

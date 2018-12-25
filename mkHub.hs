@@ -37,8 +37,7 @@ update adjs = do
 end adjs e = do
     v0:v1:v2:v3:v4:[] <- mapM (`get` adjustmentValue) adjs
     e' <- e `get` entryText
-    let a:b:c:d:_ = calH (v0:v1:v2:v3:v4:[])
-    let hub = Hub a b c d e'
-    appendHub hub
-    setHub hub
+    let ds = calH (v0:v1:v2:v3:v4:[])
+    writeHub ds e'
+    appendHub ds e'
     mainQuit
