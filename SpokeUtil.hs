@@ -35,6 +35,8 @@ getRims :: IO [Rim]
 getRims = do
     r <- readFile rimsd
     return [read x|x <- lines r]
+setRim :: Rim -> IO ()
+setRim r = writeFile rimd $ show r ++ "\n"
 writeRim :: Double -> String -> IO()
 writeRim d s = writeFile rimd $ show (Rim d s) ++ "\n"
 appendRim :: Double -> String -> IO()
@@ -64,6 +66,8 @@ getHubs :: IO [Hub]
 getHubs = do
     r <- readFile hubsd
     return [read x|x <- lines r]
+setHub :: Hub -> IO ()
+setHub h = writeFile hubd $ show h ++ "\n"
 writeHub :: [Double] -> String -> IO ()
 writeHub (a:b:c:d:_) s = writeFile hubd $ show (Hub a b c d s) ++ "\n"
 appendHub :: [Double] -> String -> IO ()
