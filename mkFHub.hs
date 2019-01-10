@@ -1,13 +1,10 @@
 import Graphics.UI.Gtk
 import SpokeUtil
-import System.Process
+import MkFrame
 import MySpinBox
 main = do
     initGUI
-    window  <- windowNew
-    hbox <- hBoxNew False 0
-    vbox <- vBoxNew False 0
-    boxPackStart vbox hbox PackNatural 0
+    (window, hbox ,vbox) <- mkFrame
     let names = ["エンド幅(100mm固定)",
                     "pcd(mm)",
                     "左エンドフランジ距離(mm)",
@@ -24,15 +21,9 @@ main = do
 
     spins <- myAddSpinButtons hbox names adjs
     mapM_ (`set` [spinButtonDigits := 0]) spins
-    l <- labelNew $ Just "hub name"
-    e <- entryNew
+    e <- setEntry vbox
     e `on` entryActivate $ end adjs e
-    containerAdd vbox l
-    containerAdd vbox e
-
-    containerAdd window vbox
     widgetShowAll window
-    window `on` unrealize $ mainQuit
     mainGUI
 update adjs = do
     vs <- mapM (`get` adjustmentValue) adjs
@@ -40,10 +31,3 @@ update adjs = do
     (adjs !! 4) `set` [adjustmentValue := (vs !! 2)]
     vs <- mapM (`get` adjustmentValue) adjs
     dispHub vs
-end adjs e = do
-    vs <- mapM (`get` adjustmentValue) adjs
-    e' <- e `get` entryText
-    let ds = calH vs
-    writeHub ds e'
-    appendHub ds e'
-    mainQuit
