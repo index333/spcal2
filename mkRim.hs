@@ -13,15 +13,16 @@ main = do
     mapM_ (\x-> onValueChanged x (update adjs)) adjs
     mapM_ (`set` [spinButtonDigits := 0]) ss
     e <- setEntry vbox
-    (e `on` entryActivate) $ end adjs e
+    (e `on` entryActivate) $ endf adjs e
     widgetShowAll window
     mainGUI
-calcRim v0 v1 = return $ v0 - v1 * 2
+calcRim v0 v1 = return r
+    where r = v0 - v1 * 2
 update adjs = do
     v0:v1:_ <- mapM (`get` adjustmentValue) adjs
     r <- calcRim v0 v1 
     print $ Rim r ""
-end adjs e = do
+endf adjs e = do
     v0:v1:_ <- mapM (`get` adjustmentValue) adjs
     r <- calcRim v0 v1 
     s <- e `get` entryText
