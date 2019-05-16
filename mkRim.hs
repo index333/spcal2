@@ -17,7 +17,7 @@ main = do
     widgetShowAll window
     mainGUI
 calcRim v0 v1 = return r
-    where r = v0 - v1 * 2
+    where r = v0 - v1 * 2 - 2
 update adjs = do
     v0:v1:_ <- mapM (`get` adjustmentValue) adjs
     r <- calcRim v0 v1 
