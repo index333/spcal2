@@ -16,8 +16,11 @@ main = do
     (e `on` entryActivate) $ endf adjs e
     widgetShowAll window
     mainGUI
-calcRim v0 v1 = return r
-    where r = v0 - v1 * 2 - 2
+calcRim rimD depth = return $ (err - a) * 2 
+    where   err = rimD / 2
+            t = 0.5
+            nh = 1
+            a = depth - t + nh
 update adjs = do
     v0:v1:_ <- mapM (`get` adjustmentValue) adjs
     r <- calcRim v0 v1 
